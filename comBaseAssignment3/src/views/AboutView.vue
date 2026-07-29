@@ -1,15 +1,42 @@
+<script setup lang="ts">
+
+  import StudentCard from '@/components/StudentCard.vue'
+  import type {Student} from '@/types'
+  import StudentService from '@/services/StudentService'
+  import { ref, onMounted } from 'vue'
+
+
+  const students = ref<Student[] | null>(null)
+
+
+  onMounted(() => {
+    // fetch event (by id) and set local event data
+    StudentService.getStudents()
+        .then((response) => {
+          students.value = response.data
+          console.log(response.data)
+        })
+        .catch((error) => {
+          console.error('There was an error!', error)
+        })
+  })
+
+
+</script>
 <template>
-  <div class="about">
-    <h1>A site for event to better the world.</h1>
-  </div>
+
+    <h1>Student List</h1>
+    <div class="event">
+      <StudentCard v-for="student in students" :key="student.id" :student="student" />
+    </div>
+  
 </template>
 
-<style>
-/* @media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-} */
+<style scoped>
+.events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 </style>
+
