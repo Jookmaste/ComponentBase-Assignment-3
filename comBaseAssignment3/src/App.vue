@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 // import HelloWorld from './components/EventCard.vue/index.js'
+
+import { ref } from 'vue'
+
+const pageSize = ref(2)
+
 </script>
 
 <template>
@@ -11,9 +16,18 @@ import { RouterLink, RouterView } from 'vue-router'
           <RouterLink :to="{ name: 'event-list-view' }">Event</RouterLink> |
           <RouterLink :to="{ name: 'about' }">About</RouterLink>
         </nav>
+
+        <div class="page-size">
+          <span>Page Size: </span>
+          <button @click="pageSize = 1">1</button>
+          <button @click="pageSize = 2">2</button>
+          <button @click="pageSize = 3">3</button>
+          <button @click="pageSize = 4">4</button>
+        </div>
+
       </div>
     </header>
-    <RouterView />
+    <RouterView :page-size="pageSize" />
   </div>
 </template>
 
@@ -42,5 +56,9 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.page-size button {
+  margin: 0 4px;
 }
 </style>

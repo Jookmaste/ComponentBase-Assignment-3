@@ -10,7 +10,7 @@
   const totalEvents = ref<number>(0)
 
   const hasNextPage = computed (() => {
-    const totalPages = Math.ceil(totalEvents.value / 2)
+    const totalPages = Math.ceil(totalEvents.value / props.pageSize)
     return page.value < totalPages 
   })
 
@@ -18,6 +18,10 @@
     page: {
       type: Number,
       required: true
+    },
+    pageSize: {
+      type: Number,
+      default: 2
     }
   })
 
@@ -27,7 +31,7 @@
 
     watchEffect(() => {
       events.value = null
-      EventService.getEvents(2, page.value)
+      EventService.getEvents(props.pageSize, page.value)
         .then((response) => {
           events.value = response.data
           totalEvents.value = response.headers['x-total-count']
