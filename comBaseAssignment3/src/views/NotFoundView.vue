@@ -1,5 +1,18 @@
+<script setup lang="ts">
+// const props = withDefaults (
+withDefaults (
+    defineProps<{
+        resource: string
+    }>(),
+    {
+        resource: 'page'
+    }
+)
+</script>
+
 <template>
     <h1>Oops!</h1>
     <h3>The page you're looking for is not here.</h3>
-    <router-like :to="{ name: 'event-list-view' }">Back to the home page</router-like>
+    <h3>The {{ resource}} page you're looking for is not here.</h3>
+    <router-link :to="{ name: 'event-list-view' }">Back to the home page</router-link>
 </template>
